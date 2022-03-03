@@ -1,0 +1,10 @@
+#+TITLE: Readme
+
+* NERF
+The hype parallel to Web3 but for graphics and vision people.
+
+* What is this repo?
+Contains basic nerf implementation. Inspired by [[https://github.com/bmild/nerf/blob/master/tiny_nerf.ipynb][tiny nerf]]. Based on [[https://arxiv.org/abs/2003.08934][NeRF]].
+
+* Why is it created?
+I was bored and started streaming. No other reasons.
