@@ -1,6 +1,6 @@
 #+TITLE: Readme
 
-* NERF
+* Buff (Definitely not NeRF)
 The hype parallel to Web3 but for graphics and vision people.
 
 * What is this repo?
