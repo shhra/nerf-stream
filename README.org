@@ -1,7 +1,7 @@
 #+TITLE: Readme
 
-* Buff (Definitely not NeRF)
-The hype parallel to Web3 but for graphics and vision people.
+* Behold, unusual Feed Forwards - BuFF (Definitely not NeRF)
+The hype parallel to Web3 but for graphics and vision people. (Suddenly FF is a thing!)
 
 * What is this repo?
 Contains basic nerf implementation. Inspired by [[https://github.com/bmild/nerf/blob/master/tiny_nerf.ipynb][tiny nerf]]. Based on [[https://arxiv.org/abs/2003.08934][NeRF]].
