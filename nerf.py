@@ -23,6 +23,7 @@ def load_and_view_data(visualize=False):
         print("Focal data: {}".format(focal))
         plt.imshow(random_image)
         plt.show()
+    return images, poses, focal
 
 
 def pose_encoder(x, hp_L=5):
@@ -37,6 +38,7 @@ class Nerf(torch.nn.Module):
     """This is totaly random math invented by a lazy person who wants to GET. SHIT. DONE.
     Takes input gives "volume density"
     """
+
     def __init__(self, num_layers=8, dim=256, hp_L=5):
         super(Nerf, self).__init__()
         layers = []
@@ -70,3 +72,42 @@ class Nerf(torch.nn.Module):
         y = torch.nn.ReLU()(self.final_layer(density))
         radiance = torch.nn.Sigmoid()(self.color_output(y))
         return density, radiance
+
+
+# Stream Part 2
+
+
+def get_ray(width, height, focal_length, camera_to_world):
+    xs, ys = torch.meshgrid(
+        torch.arange(width, dtype=torch.float32),
+        torch.arange(height, dtype=torch.float32),
+    )
+    directions = torch.stack(
+        (
+            (xs - width * 0.5) / focal_length,
+            -(ys - height * 0.5) / focal_length,
+            -torch.ones_like(xs),
+        ),
+        -1,
+    )
+    rays_d = torch.sum(directions[..., np.newaxis, :] * camera_to_world[:3, :3], -1)
+    rays_o = torch.broadcast_to(camera_to_world[:3, -1], rays_d.shape)
+    return rays_o, rays_d
+
+
+def render(near, far, num_samples, ray_origin, ray_direction, nerf):
+    # Sample rays from near to far.
+    pts = torch.linspace(near, far)
+    pts += torch.rand((ray_origin.shape[:-1], num_samples))
+    # Sampling new hit points for volumetric rendering
+    sample_pts = ray_origin[..., None,:] + ray_direction[..., None, :] * pts[..., :, None]
+    # Find the radiance and volume density
+    #
+
+
+def test():
+    image, poses, focal = load_and_view_data()
+    print(image.shape)
+    rays_o, rays_d = get_ray(image[0].shape[1], image[0].shape[0], focal, poses[0])
+    print("Directions:\n", rays_d)
+    print(rays_d.shape)
